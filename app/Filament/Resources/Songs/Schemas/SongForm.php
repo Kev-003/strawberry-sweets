@@ -22,6 +22,8 @@ class SongForm
                     ->required()
                     ->live(onBlur: true),
 
+                \Filament\Forms\Components\DatePicker::make('release_date'),
+
                 \Filament\Forms\Components\FileUpload::make('audio_file')
                     ->disk('public')
                     ->directory(fn ($get) => 'assets/' . str($get('title'))->slug())

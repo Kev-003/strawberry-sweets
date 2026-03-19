@@ -17,11 +17,13 @@ class Song extends Model
         'is_featured',
         'track_number',
         'spotify_id',
+        'release_date',
     ];
 
     protected $casts = [
         'is_featured' => 'boolean',
         'track_number' => 'integer',
+        'release_date' => 'date',
     ];
 
     public function album()
