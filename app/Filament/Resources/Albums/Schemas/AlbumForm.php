@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Albums\Schemas;
 
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -15,7 +16,12 @@ class AlbumForm
             ->components([
                 TextInput::make('title')
                     ->required()
-                    ->live(onBlur: true), // Live update so dynamic directories can use the title
+                    ->live(onBlur: true),
+
+                Textarea::make('description')
+                    ->rows(3)
+                    ->nullable()
+                    ->columnSpanFull(),
 
                 DatePicker::make('release_date'),
 

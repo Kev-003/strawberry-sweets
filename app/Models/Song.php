@@ -9,6 +9,7 @@ class Song extends Model
     protected $fillable = [
         'album_id',
         'title',
+        'description',
         'audio_file',
         'cover_art',
         'banner_webp',

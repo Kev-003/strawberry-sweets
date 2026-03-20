@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Songs\Schemas;
 
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -21,6 +22,11 @@ class SongForm
                 TextInput::make('title')
                     ->required()
                     ->live(onBlur: true),
+
+                Textarea::make('description')
+                    ->rows(3)
+                    ->nullable()
+                    ->columnSpanFull(),
 
                 \Filament\Forms\Components\DatePicker::make('release_date'),
 

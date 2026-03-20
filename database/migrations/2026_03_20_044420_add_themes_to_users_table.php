@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('songs', function (Blueprint $table) {
-            if (!Schema::hasColumn('songs', 'release_date')) {
-                $table->date('release_date')->nullable();
-            }
+       Schema::table('users', function (Blueprint $table) {
+            $table->string('theme')->default('system');
         });
     }
 
@@ -23,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('songs', function (Blueprint $table) {
-            $table->dropColumn('release_date');
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };

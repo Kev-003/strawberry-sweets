@@ -6,25 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('songs', function (Blueprint $table) {
-            if (!Schema::hasColumn('songs', 'release_date')) {
-                $table->date('release_date')->nullable();
-            }
+            $table->text('description')->nullable()->after('title');
+        });
+
+        Schema::table('albums', function (Blueprint $table) {
+            $table->text('description')->nullable()->after('title');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('songs', function (Blueprint $table) {
-            $table->dropColumn('release_date');
+            $table->dropColumn('description');
+        });
+
+        Schema::table('albums', function (Blueprint $table) {
+            $table->dropColumn('description');
         });
     }
 };

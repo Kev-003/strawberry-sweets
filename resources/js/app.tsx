@@ -16,14 +16,24 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
     setup({ el, App, props }) {
-        const root = createRoot(el);
+        // Apply the server-provided theme before first render to avoid a flash of the wrong theme.
+        const theme = (props.initialPage.props as { theme?: 'light' | 'dark' | 'system' }).theme ?? 'light';
+        const root = document.documentElement;
+        if (theme === 'dark') {
+            root.classList.add('dark');
+        } else if (theme === 'light') {
+            root.classList.remove('dark');
+        } else {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            root.classList.toggle('dark', prefersDark);
+        }
 
-        root.render(<App {...props} />);
+        createRoot(el).render(<App {...props} />);
     },
     progress: {
         color: '#4B5563',
     },
 });
 
-// This will set light / dark mode on load...
+// Client-side fallback for cases where no server theme is provided (e.g. cached pages).
 initializeTheme();
