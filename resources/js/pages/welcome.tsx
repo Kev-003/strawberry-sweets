@@ -271,7 +271,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                 </div>
                 {/* ── Band Photo ── */}
                 <div className="relative flex w-full max-w-full items-center justify-center px-4 py-4 md:py-10 lg:px-8">
-                    <BandPhoto photo="gallery/band.jpg" storageUrl={storageUrl} />
+                    <BandPhoto photo="band.jpg" storageUrl={storageUrl} />
                 </div>
 
                 {/* ── Footer ── */}
