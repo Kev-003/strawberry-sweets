@@ -6,6 +6,7 @@ RUN apk add --no-cache \
     nodejs \
     npm \
     sqlite \
+    sqlite-dev \
     git \
     curl \
     zip \
