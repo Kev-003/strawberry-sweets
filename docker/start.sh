@@ -24,6 +24,10 @@ php artisan sitemap:generate
 # Create storage symlink
 php artisan storage:link
 
+# Publish Livewire and Filament assets
+php artisan livewire:publish --assets
+php artisan filament:assets
+
 # Start PHP-FPM in background
 php-fpm -D
 
