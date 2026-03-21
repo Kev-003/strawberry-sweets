@@ -4,12 +4,48 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="{{ url()->current() }}" />
+        <meta name="theme-color" content="#1a0a0d" />
+
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap" rel="stylesheet">
 
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-89BZN4P6E5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-89BZN4P6E5');
+        </script>
+
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "MusicGroup",
+            "name": "Strawberry Sweets",
+            "description": "Strawberry Sweets is an indie band from Balanga, Bataan, that started from a school event where a one-time performance turned into real chemistry.",
+            "genre": "Indie",
+            "foundingLocation": {
+                "@type": "Place",
+                "name": "Balanga, Bataan, Philippines"
+            },
+            "url": "https://strawberrysweets.com",
+            "image": "https://strawberrysweets.com/storage/gallery/band.jpg",
+            "sameAs": [
+                "https://open.spotify.com/artist/7Mo22u97DuWuFpKEnD0o4Y?si=iRL9e663TR6-YroI0IeSbQ",
+                "https://www.youtube.com/channel/UCxi5A41TEGDnj2kmZQt8efQ",
+                "https://www.instagram.com/strawberry.sweetsmusic",
+                "https://www.facebook.com/profile.php?id=61579241754690",
+                "https://www.tiktok.com/@strawberrysweetsmusic",
+                "https://music.apple.com/us/artist/strawberry-sweets/1839745096"
+            ]
+        }
+        </script>
         @routes
         <script>
             (function () {

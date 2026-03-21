@@ -88,7 +88,27 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
 
     return (
         <>
-            <Head title="Welcome" />
+            <Head>
+                <title>Strawberry Sweets</title>
+                <meta
+                    name="description"
+                    content="Strawberry Sweets is an indie band from Balanga, Bataan. Making songs that capture fleeting feelings and dreamlike moments."
+                />
+                <meta name="keywords" content="Strawberry Sweets, indie band, Balanga, Bataan, Filipino indie, OPM" />
+
+                {/* Open Graph — for link previews on Facebook, Discord, etc. */}
+                <meta property="og:title" content="Strawberry Sweets" />
+                <meta property="og:description" content="Making songs that capture fleeting feelings and dreamlike moments." />
+                <meta property="og:image" content="/storage/gallery/band.jpg" />
+                <meta property="og:type" content="music.band" />
+                <meta property="og:url" content="https://yoursite.com" />
+
+                {/* Twitter/X card */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Strawberry Sweets" />
+                <meta name="twitter:description" content="Making songs that capture fleeting feelings and dreamlike moments." />
+                <meta name="twitter:image" content="/storage/gallery/band.jpg" />
+            </Head>
             <div className="bg-background text-foreground dark:bg-background flex min-h-screen flex-col items-center">
                 {/* ── Header ── */}
                 <div className="bg-background sticky top-0 z-50 w-full max-w-full px-4 py-6 lg:px-8">
