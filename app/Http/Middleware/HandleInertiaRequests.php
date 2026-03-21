@@ -42,7 +42,7 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user()?->only('id', 'name', 'theme'),
             ],
             'theme' => $request->user()?->theme
                 ?? $request->session()->get('theme', 'light'),

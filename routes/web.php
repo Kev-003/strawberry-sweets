@@ -48,17 +48,20 @@ Route::post('/theme', function (Request $request) {
 })->name('theme.update');
 
 Route::get('/gallery/{folder}', function (string $folder) {
+    $allowed = ['dhvsu', 'prod', 'candid'];
+    if (!in_array($folder, $allowed)) abort(404);
+
     $path = storage_path("app/public/gallery/{$folder}");
-    if (!File::isDirectory($path)) abort(404);
+    if (!Illuminate\Support\Facades\File::isDirectory($path)) abort(404);
     
-    $files = File::files($path);
+    $files = Illuminate\Support\Facades\File::files($path);
     $urls = collect($files)
         ->filter(fn($f) => in_array(strtolower($f->getExtension()), ['jpg', 'jpeg', 'png', 'webp']))
         ->map(fn($f) => asset("storage/gallery/{$folder}/" . $f->getFilename()))
         ->values();
     
     return response()->json($urls);
-})->name('gallery.folder');
+})->middleware('throttle:60,1')->name('gallery.folder');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
