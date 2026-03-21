@@ -51,6 +51,9 @@ class HandleInertiaRequests extends Middleware
                 'prod',     // storage/app/public/gallery/prod/
                 'candid',  // storage/app/public/gallery/candid/
             ],
+            'storageUrl' => config('filesystems.default') === 'r2'
+                ? rtrim(config('filesystems.disks.r2.url'), '/')
+                : '/storage',
         ]);
     }
 }

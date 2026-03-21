@@ -30,14 +30,13 @@ interface SongListProps {
     albums: AlbumFilter[];
     selectedId: number | null;
     onSelect: (song: SongItem) => void;
+    storageUrl: string;
 }
 
-export default function SongList({ songs, albums, selectedId, onSelect }: SongListProps) {
+export default function SongList({ songs, albums, selectedId, onSelect, storageUrl }: SongListProps) {
     const [activeAlbumId, setActiveAlbumId] = useState<number | null>(null);
 
-    const filtered = activeAlbumId == null
-        ? songs
-        : songs.filter((s) => s.album?.id === activeAlbumId);
+    const filtered = activeAlbumId == null ? songs : songs.filter((s) => s.album?.id === activeAlbumId);
 
     return (
         <div className="flex flex-col gap-3">
@@ -49,7 +48,7 @@ export default function SongList({ songs, albums, selectedId, onSelect }: SongLi
                         className={`rounded-full px-3 py-1 text-xs font-medium transition-colors duration-150 ${
                             activeAlbumId === null
                                 ? 'bg-brand text-brand-foreground shadow-sm'
-                                : 'bg-black/5 text-muted-foreground hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10'
+                                : 'text-muted-foreground bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10'
                         }`}
                     >
                         All
@@ -61,7 +60,7 @@ export default function SongList({ songs, albums, selectedId, onSelect }: SongLi
                             className={`rounded-full px-3 py-1 text-xs font-medium transition-colors duration-150 ${
                                 activeAlbumId === album.id
                                     ? 'bg-brand text-brand-foreground shadow-sm'
-                                    : 'bg-black/5 text-muted-foreground hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10'
+                                    : 'text-muted-foreground bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10'
                             }`}
                         >
                             {album.title}
@@ -73,17 +72,15 @@ export default function SongList({ songs, albums, selectedId, onSelect }: SongLi
             {/* Song rows */}
             <div className="flex flex-col">
                 {filtered.length === 0 ? (
-                    <p className="px-3 py-6 text-center text-sm text-muted-foreground">No songs found.</p>
+                    <p className="text-muted-foreground px-3 py-6 text-center text-sm">No songs found.</p>
                 ) : (
                     filtered.map((song) => (
                         <button
                             key={song.id}
                             onClick={() => onSelect(song)}
                             aria-label={`Select ${song.title}`}
-                            className={`w-full text-left rounded-lg transition-colors duration-100 ${
-                                selectedId === song.id
-                                    ? 'bg-brand/10 ring-1 ring-brand/30'
-                                    : ''
+                            className={`w-full rounded-lg text-left transition-colors duration-100 ${
+                                selectedId === song.id ? 'bg-brand/10 ring-brand/30 ring-1' : ''
                             }`}
                         >
                             <SongCard
@@ -93,6 +90,7 @@ export default function SongList({ songs, albums, selectedId, onSelect }: SongLi
                                 releaseDate={song.release_date}
                                 trackNumber={song.track_number}
                                 links={song.links}
+                                storageUrl={storageUrl}
                             />
                         </button>
                     ))

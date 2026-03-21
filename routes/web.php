@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Setting;
 use App\Models\Song;
@@ -48,18 +49,21 @@ Route::post('/theme', function (Request $request) {
 })->name('theme.update');
 
 Route::get('/gallery/{folder}', function (string $folder) {
-    $allowed = ['dhvsu', 'prod', 'candid'];
-    if (!in_array($folder, $allowed)) abort(404);
+    $disk = Storage::disk('r2');
+    $prefix = "gallery/{$folder}";
 
-    $path = storage_path("app/public/gallery/{$folder}");
-    if (!Illuminate\Support\Facades\File::isDirectory($path)) abort(404);
-    
-    $files = Illuminate\Support\Facades\File::files($path);
+    if (!$disk->exists($prefix)) abort(404);
+
+    $files = $disk->files($prefix);
+
     $urls = collect($files)
-        ->filter(fn($f) => in_array(strtolower($f->getExtension()), ['jpg', 'jpeg', 'png', 'webp']))
-        ->map(fn($f) => asset("storage/gallery/{$folder}/" . $f->getFilename()))
+        ->filter(fn($f) => in_array(
+            strtolower(pathinfo($f, PATHINFO_EXTENSION)),
+            ['jpg', 'jpeg', 'png', 'webp']
+        ))
+        ->map(fn($f) => $disk->url($f))
         ->values();
-    
+
     return response()->json($urls);
 })->middleware('throttle:60,1')->name('gallery.folder');
 

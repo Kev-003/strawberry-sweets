@@ -35,7 +35,7 @@ function useDarkMode() {
     return isDark;
 }
 
-export default function BandIntro({ photo }: { photo: string }) {
+export default function BandIntro({ photo, storageUrl }: { photo: string; storageUrl: string }) {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const isDark = useDarkMode();
@@ -49,7 +49,7 @@ export default function BandIntro({ photo }: { photo: string }) {
             <div ref={containerRef} className="relative w-full overflow-hidden rounded-sm md:rounded-xl" style={{ transform: 'translateZ(0)' }}>
                 {/* Layer 1 — always desaturated and blurred (base) */}
                 <img
-                    src={`/storage/${photo}`}
+                    src={`${storageUrl}/${photo}`}
                     alt="The band"
                     className="h-auto w-full object-cover"
                     style={isMobile ? undefined : { filter: 'grayscale(80%) blur(2px)', willChange: 'filter' }}
@@ -103,7 +103,7 @@ export default function BandIntro({ photo }: { photo: string }) {
                                 {/* Preview inside square */}
                                 <div className="absolute inset-0 overflow-hidden rounded-sm" style={{ zIndex: 1 }}>
                                     <img
-                                        src={swapPhoto ? `/storage/${member.darkPhoto}` : `/storage/${photo}`}
+                                        src={swapPhoto ? `${storageUrl}/${member.darkPhoto}` : `${storageUrl}/${photo}`}
                                         alt=""
                                         className="h-full w-full object-cover transition-all duration-500"
                                         style={{
@@ -126,7 +126,7 @@ export default function BandIntro({ photo }: { photo: string }) {
                                 {!swapPhoto && isHovered && (
                                     <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-sm" style={{ zIndex: 4 }}>
                                         <img
-                                            src={`/storage/${photo}`}
+                                            src={`${storageUrl}/${photo}`}
                                             alt=""
                                             aria-hidden
                                             className="absolute h-auto object-cover"
@@ -151,7 +151,7 @@ export default function BandIntro({ photo }: { photo: string }) {
                                         }}
                                     >
                                         <img
-                                            src={`/storage/${member.darkPhoto}`}
+                                            src={`${storageUrl}/${member.darkPhoto}`}
                                             alt={member.name}
                                             className="h-full w-full object-cover"
                                             style={{

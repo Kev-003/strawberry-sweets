@@ -25,6 +25,9 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    theme: string;
+    galleryRows: string[];
+    storageUrl: string;
     [key: string]: unknown;
 }
 

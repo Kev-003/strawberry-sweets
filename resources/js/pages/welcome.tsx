@@ -48,11 +48,11 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
         const titleEffectSvg = featured?.title_effect_svg;
 
         const mediaToPreload = [
-            bannerImage ? `/storage/${bannerImage}` : null,
-            titleSvg ? `/storage/${titleSvg}` : null,
-            titleEffectSvg ? `/storage/${titleEffectSvg}` : null,
-            ...songs.map((s) => (s.cover_art ? `/storage/${s.cover_art}` : null)),
-            '/storage/band.jpg', // Main band photo
+            bannerImage ? `${storageUrl}/${bannerImage}` : null,
+            titleSvg ? `${storageUrl}/${titleSvg}` : null,
+            titleEffectSvg ? `${storageUrl}/${titleEffectSvg}` : null,
+            ...songs.map((s) => (s.cover_art ? `${storageUrl}/${s.cover_art}` : null)),
+            `${storageUrl}/band.jpg`, // Main band photo
         ].filter(Boolean) as string[];
 
         const preloadImage = (src: string) =>
@@ -86,6 +86,8 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
     const infoAlbum = selectedSong?.album?.title ?? null;
     const infoIsComingSoon = infoReleaseDate ? new Date(infoReleaseDate) > new Date() : false;
 
+    const { storageUrl } = usePage<SharedData>().props;
+
     return (
         <>
             <Head>
@@ -99,7 +101,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                 {/* Open Graph — for link previews on Facebook, Discord, etc. */}
                 <meta property="og:title" content="Strawberry Sweets" />
                 <meta property="og:description" content="Making songs that capture fleeting feelings and dreamlike moments." />
-                <meta property="og:image" content="/storage/gallery/band.jpg" />
+                <meta property="og:image" content={`${storageUrl}/gallery/band.jpg`} />
                 <meta property="og:type" content="music.band" />
                 <meta property="og:url" content="https://yoursite.com" />
 
@@ -107,7 +109,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="Strawberry Sweets" />
                 <meta name="twitter:description" content="Making songs that capture fleeting feelings and dreamlike moments." />
-                <meta name="twitter:image" content="/storage/gallery/band.jpg" />
+                <meta name="twitter:image" content={`${storageUrl}/gallery/band.jpg`} />
             </Head>
             <div className="bg-background text-foreground dark:bg-background flex min-h-screen flex-col items-center">
                 {/* ── Header ── */}
@@ -132,7 +134,11 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                 <div className="relative w-full opacity-100 transition-opacity duration-750 starting:opacity-0">
                     {bannerImage ? (
                         <div className="relative h-[33.33vh] w-full overflow-visible">
-                            <img src={`/storage/${bannerImage}`} alt={featured?.title || 'Featured Release'} className="h-full w-full object-cover" />
+                            <img
+                                src={`${storageUrl}/${bannerImage}`}
+                                alt={featured?.title || 'Featured Release'}
+                                className="h-full w-full object-cover"
+                            />
 
                             {(titleSvg || titleEffectSvg) && (
                                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
@@ -140,7 +146,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                                         <div className="relative flex items-center justify-center">
                                             {titleEffectSvg && (
                                                 <img
-                                                    src={`/storage/${titleEffectSvg}`}
+                                                    src={`${storageUrl}/${titleEffectSvg}`}
                                                     alt="Title Effect"
                                                     className="title-effect-anim absolute inset-0 h-full w-full scale-100 opacity-80"
                                                 />
@@ -148,14 +154,14 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                                             <div className="relative flex flex-col items-center">
                                                 {titleSvg && (
                                                     <img
-                                                        src={`/storage/${titleSvg}`}
+                                                        src={`${storageUrl}/${titleSvg}`}
                                                         alt={`${featured?.title} Text Logo`}
                                                         className="relative z-10 h-auto w-64 lg:w-130"
                                                     />
                                                 )}
                                                 {!titleSvg && titleEffectSvg && (
                                                     <img
-                                                        src={`/storage/${titleEffectSvg}`}
+                                                        src={`${storageUrl}/${titleEffectSvg}`}
                                                         alt="Title Effect Placeholder"
                                                         className="invisible h-auto w-64 lg:w-120"
                                                     />
@@ -208,7 +214,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                                     <div className="w-full max-w-xs overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/10 dark:ring-white/10">
                                         <img
                                             key={infoCover}
-                                            src={`/storage/${infoCover}`}
+                                            src={`${storageUrl}/${infoCover}`}
                                             alt={infoTitle}
                                             className="w-full object-cover transition-opacity duration-300"
                                         />
@@ -265,7 +271,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                 </div>
                 {/* ── Band Photo ── */}
                 <div className="relative flex w-full max-w-full items-center justify-center px-4 py-4 md:py-10 lg:px-8">
-                    <BandPhoto photo="band.jpg" />
+                    <BandPhoto photo="gallery/band.jpg" storageUrl={storageUrl} />
                 </div>
 
                 {/* ── Footer ── */}
