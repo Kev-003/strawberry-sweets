@@ -26,26 +26,26 @@ class AlbumForm
                 DatePicker::make('release_date'),
 
                 \Filament\Forms\Components\FileUpload::make('cover_art')
-                    ->disk('public')
+                    ->disk('r2')
                     ->directory(fn ($get) => 'assets/' . str($get('title'))->slug())
                     ->image()
                     ->imageEditor(),
 
                 \Filament\Forms\Components\FileUpload::make('banner_webp')
                     ->label('Banner (WebP)')
-                    ->disk('public')
+                    ->disk('r2')
                     ->directory(fn ($get) => 'assets/' . str($get('title'))->slug())
                     ->image()
                     ->acceptedFileTypes(['image/webp']),
 
                 \Filament\Forms\Components\FileUpload::make('title_svg')
                     ->label('Title (SVG)')
-                    ->disk('public')
+                    ->disk('r2')
                     ->directory(fn ($get) => 'assets/' . str($get('title'))->slug()),
 
                 \Filament\Forms\Components\FileUpload::make('title_effect_svg')
                     ->label('Title Effect (SVG)')
-                    ->disk('public')
+                    ->disk('r2')
                     ->directory(fn ($get) => 'assets/' . str($get('title'))->slug()),
 
                 Toggle::make('is_featured')
