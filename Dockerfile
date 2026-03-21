@@ -13,7 +13,9 @@ RUN apk add --no-cache \
     unzip \
     libpng-dev \
     oniguruma-dev \
-    libxml2-dev
+    libxml2-dev \
+    icu-dev \
+    libzip-dev
 
 # Install PHP extensions
 RUN docker-php-ext-install \
@@ -22,7 +24,9 @@ RUN docker-php-ext-install \
     exif \
     pcntl \
     bcmath \
-    gd
+    gd \
+    intl \
+    zip
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
