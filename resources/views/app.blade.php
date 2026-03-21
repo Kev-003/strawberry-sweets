@@ -8,7 +8,9 @@
         <link rel="canonical" href="{{ url()->current() }}" />
         <meta name="theme-color" content="#1a0a0d" />
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>Strawberry Sweets</title>
+
+        <link rel="icon" type="image/svg+xml" href="{{ asset('logo.svg') }}">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,13 +27,13 @@
 
         <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "MusicGroup",
+            "@@context": "https://schema.org",
+            "@@type": "MusicGroup",
             "name": "Strawberry Sweets",
             "description": "Strawberry Sweets is an indie band from Balanga, Bataan, that started from a school event where a one-time performance turned into real chemistry.",
             "genre": "Indie",
             "foundingLocation": {
-                "@type": "Place",
+                "@@type": "Place",
                 "name": "Balanga, Bataan, Philippines"
             },
             "url": "https://strawberrysweets.com",

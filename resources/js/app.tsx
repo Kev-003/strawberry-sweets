@@ -10,10 +10,10 @@ declare global {
     const route: typeof routeFn;
 }
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = 'Strawberry Sweets';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => title || appName,
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
     setup({ el, App, props }) {
         // Apply the server-provided theme before first render to avoid a flash of the wrong theme.
