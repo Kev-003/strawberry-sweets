@@ -54,6 +54,25 @@ class AlbumForm
                 TextInput::make('spotify_id')
                     ->label('Spotify ID')
                     ->helperText('Optional Spotify ID for future integrations'),
+
+                TextInput::make('presave_link')
+                    ->label('Pre-save Link')
+                    ->url()
+                    ->columnSpanFull(),
+
+                \Filament\Schemas\Components\Section::make('Links')
+                    ->schema([
+                        TextInput::make('links.spotify')
+                            ->label('Spotify')
+                            ->url(),
+                        TextInput::make('links.youtube')
+                            ->label('YouTube')
+                            ->url(),
+                        TextInput::make('links.apple_music')
+                            ->label('Apple Music')
+                            ->url(),
+                    ])
+                    ->columns(3),
             ]);
     }
 }

@@ -12,6 +12,12 @@ export interface SongItem {
         id: number;
         title: string;
     } | null;
+    presave_link?: string | null;
+    links?: {
+        spotify?: string;
+        youtube?: string;
+        apple_music?: string;
+    } | null;
 }
 
 export interface AlbumFilter {
@@ -86,6 +92,7 @@ export default function SongList({ songs, albums, selectedId, onSelect }: SongLi
                                 albumTitle={song.album?.title}
                                 releaseDate={song.release_date}
                                 trackNumber={song.track_number}
+                                links={song.links}
                             />
                         </button>
                     ))

@@ -1,10 +1,14 @@
 import AppLogo from '@/components/app-logo';
+import AboutPhrase from '@/components/custom/about-phrase';
+import BandPhoto from '@/components/custom/band-photo';
 import StreamingButton from '@/components/custom/button';
+import Footer from '@/components/custom/footer';
+import GalleryStrip from '@/components/custom/marquee-row';
 import SongList, { type AlbumFilter, type SongItem } from '@/components/custom/song-list';
 import ThemeToggle from '@/components/custom/theme-toggle';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface FeaturedItem {
     title: string;
@@ -14,6 +18,12 @@ interface FeaturedItem {
     title_svg: string | null;
     title_effect_svg: string | null;
     release_date: string | null;
+    presave_link: string | null;
+    links: {
+        spotify?: string;
+        youtube?: string;
+        apple_music?: string;
+    } | null;
     [key: string]: any;
 }
 
@@ -30,28 +40,58 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
     // Selected song from the list (null = show featured)
     const [selectedSong, setSelectedSong] = useState<SongItem | null>(null);
 
+    // Dismiss loading screen on mount after preloading media
+    useEffect(() => {
+        const featured = featuredSong || featuredAlbum;
+        const bannerImage = featured?.banner_webp || featured?.cover_art;
+        const titleSvg = featured?.title_svg;
+        const titleEffectSvg = featured?.title_effect_svg;
+
+        const mediaToPreload = [
+            bannerImage ? `/storage/${bannerImage}` : null,
+            titleSvg ? `/storage/${titleSvg}` : null,
+            titleEffectSvg ? `/storage/${titleEffectSvg}` : null,
+            ...songs.map((s) => (s.cover_art ? `/storage/${s.cover_art}` : null)),
+            '/storage/band.jpg', // Main band photo
+        ].filter(Boolean) as string[];
+
+        const preloadImage = (src: string) =>
+            new Promise((resolve) => {
+                const img = new Image();
+                img.onload = resolve;
+                img.onerror = resolve; // Continue on error
+                img.src = src;
+            });
+
+        const minimumDelay = new Promise((resolve) => setTimeout(resolve, 500));
+
+        Promise.all([...mediaToPreload.map(preloadImage), minimumDelay]).then(() => {
+            document.getElementById('loading-screen')?.classList.add('hidden');
+        });
+    }, [featuredSong, featuredAlbum, songs]);
+
     const featured = featuredSong || featuredAlbum;
     const bannerImage = featured?.banner_webp || featured?.cover_art;
     const titleSvg = featured?.title_svg;
     const titleEffectSvg = featured?.title_effect_svg;
     const releaseDate = featured?.release_date;
-    const isComingSoon = releaseDate ? releaseDate > new Date().toISOString().split('T')[0] : false;
+    const isComingSoon = releaseDate ? new Date(releaseDate) > new Date() : false;
     const hasReleaseDate = !!releaseDate;
 
     // Info panel — selected song takes priority over the featured item
     const infoTitle = selectedSong ? selectedSong.title : featured?.title;
-    const infoCover = selectedSong ? selectedSong.cover_art : (featured?.cover_art || featured?.banner_webp);
+    const infoCover = selectedSong ? selectedSong.cover_art : featured?.cover_art || featured?.banner_webp;
     const infoDescription = selectedSong ? selectedSong.description : featured?.description;
     const infoReleaseDate = selectedSong ? selectedSong.release_date : releaseDate;
     const infoAlbum = selectedSong?.album?.title ?? null;
-    const infoIsComingSoon = infoReleaseDate ? infoReleaseDate > new Date().toISOString().split('T')[0] : false;
+    const infoIsComingSoon = infoReleaseDate ? new Date(infoReleaseDate) > new Date() : false;
 
     return (
         <>
             <Head title="Welcome" />
             <div className="bg-background text-foreground dark:bg-background flex min-h-screen flex-col items-center">
                 {/* ── Header ── */}
-                <div className="w-full max-w-full px-4 py-6 lg:px-8">
+                <div className="bg-background sticky top-0 z-50 w-full max-w-full px-4 py-6 lg:px-8">
                     <header className="flex w-full items-center justify-between text-sm not-has-[nav]:hidden">
                         <AppLogo />
                         <nav className="flex items-center justify-end gap-4">
@@ -110,6 +150,12 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                                 <StreamingButton
                                     label={isComingSoon ? 'Coming Soon' : 'Out Now'}
                                     className="absolute top-1/2 left-1/2 z-20 mt-6 -translate-x-1/2 translate-y-1/2 rounded-full border border-white/20 bg-black/30 px-4 py-1 text-[10px] font-bold tracking-[0.4em] whitespace-nowrap text-white uppercase shadow-2xl backdrop-blur-md"
+                                    onClick={() => {
+                                        const link = isComingSoon
+                                            ? featured?.presave_link
+                                            : featured?.links?.spotify || featured?.links?.youtube || featured?.links?.apple_music;
+                                        if (link) window.open(link, '_blank');
+                                    }}
                                 />
                             )}
                         </div>
@@ -120,7 +166,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                     )}
                 </div>
 
-                {/* ── Main Content ── */}
+                {/* ── Discography ── */}
                 <div className="w-full max-w-full px-4 py-10 lg:px-8">
                     <main>
                         {/* 3-column grid section */}
@@ -132,12 +178,12 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                                     songs={songs}
                                     albums={albums}
                                     selectedId={selectedSong?.id ?? null}
-                                    onSelect={(song) => setSelectedSong(prev => prev?.id === song.id ? null : song)}
+                                    onSelect={(song) => setSelectedSong((prev) => (prev?.id === song.id ? null : song))}
                                 />
                             </section>
 
                             {/* Col 2 — Featured Cover */}
-                            <section className="flex items-start justify-center">
+                            <section className="hidden items-start justify-center md:flex">
                                 {infoCover ? (
                                     <div className="w-full max-w-xs overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/10 dark:ring-white/10">
                                         <img
@@ -155,15 +201,13 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                             </section>
 
                             {/* Col 3 — Title & Description */}
-                            <section className="col-span-2 flex flex-col gap-4">
+                            <section className="col-span-2 hidden flex-col gap-4 md:flex">
                                 {infoTitle ? (
                                     <>
                                         <h2 className="font-display text-foreground text-5xl leading-tight font-bold transition-all duration-300">
                                             {infoTitle}
                                         </h2>
-                                        {infoAlbum && (
-                                            <p className="text-muted-foreground text-sm font-medium">{infoAlbum}</p>
-                                        )}
+                                        {infoAlbum && <p className="text-muted-foreground text-sm font-medium">{infoAlbum}</p>}
                                         {infoReleaseDate && (
                                             <p className="text-brand text-xs font-medium tracking-widest uppercase">
                                                 {infoIsComingSoon ? '🗓 Coming Soon' : '🎵 Out Now'} &middot;{' '}
@@ -186,6 +230,27 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                             </section>
                         </div>
                     </main>
+                </div>
+                {/* ── About ── */}
+                <div className="relative flex w-full max-w-full items-center justify-center px-4 py-4 md:py-10 lg:px-8">
+                    <AboutPhrase />
+                    <p className="text-foreground text-md relative bottom-5 z-10 mx-2 leading-relaxed md:absolute md:mx-70 md:translate-y-1/2 md:text-3xl">
+                        Strawberry Sweets is an indie band from Balanga, Bataan, that started from a school event where a one-time performance turned
+                        into real chemistry. What began as a simple collab soon grew into a shared love for making songs that capture fleeting
+                        feelings and dreamlike moments.
+                    </p>
+                </div>
+                <div className="relative mt-3 flex w-full max-w-full items-center justify-center px-4 py-4 md:mt-30 md:py-10 lg:px-8">
+                    <GalleryStrip folders={['dhvsu', 'prod', 'candid']} />
+                </div>
+                {/* ── Band Photo ── */}
+                <div className="relative flex w-full max-w-full items-center justify-center px-4 py-4 md:py-10 lg:px-8">
+                    <BandPhoto photo="band.jpg" />
+                </div>
+
+                {/* ── Footer ── */}
+                <div className="relative flex w-full max-w-full items-center justify-center px-4 py-4 md:py-10 lg:px-8">
+                    <Footer />
                 </div>
             </div>
         </>

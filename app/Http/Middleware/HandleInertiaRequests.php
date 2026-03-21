@@ -46,6 +46,11 @@ class HandleInertiaRequests extends Middleware
             ],
             'theme' => $request->user()?->theme
                 ?? $request->session()->get('theme', 'light'),
+            'galleryRows' => [
+                'dhvsu',       // storage/app/public/gallery/dhvsu/
+                'prod',     // storage/app/public/gallery/prod/
+                'candid',  // storage/app/public/gallery/candid/
+            ],
         ]);
     }
 }

@@ -19,12 +19,15 @@ class Song extends Model
         'track_number',
         'spotify_id',
         'release_date',
+        'presave_link',
+        'links',
     ];
 
     protected $casts = [
         'is_featured' => 'boolean',
         'track_number' => 'integer',
         'release_date' => 'date',
+        'links' => 'array',
     ];
 
     public function album()

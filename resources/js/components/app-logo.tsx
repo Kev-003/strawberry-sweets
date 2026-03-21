@@ -115,7 +115,8 @@ export default function AppLogo() {
             <div ref={iconRef} className="flex-shrink-0">
                 <AppLogoIcon className="text-brand dark:text-brand size-12 fill-current" />
             </div>
-            <span ref={textRef} className="brand-heading text-brand mt-1 text-4xl leading-none" style={{ display: 'inline-block' }}>
+
+            <span ref={textRef} className="brand-heading text-brand mt-1 hidden text-4xl leading-none md:inline-block">
                 {TEXT.split('').map((char, i) => (
                     <span
                         key={i}

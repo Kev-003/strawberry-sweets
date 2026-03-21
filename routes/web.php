@@ -18,10 +18,10 @@ Route::get('/', function () {
     $songs = Song::with('album')
         ->orderBy('track_number')
         ->orderBy('title')
-        ->get(['id', 'title', 'description', 'cover_art', 'release_date', 'track_number', 'album_id']);
+        ->get(['id', 'title', 'description', 'cover_art', 'release_date', 'track_number', 'album_id', 'presave_link', 'links']);
 
     $albums = Album::orderBy('release_date', 'desc')
-        ->get(['id', 'title']);
+        ->get(['id', 'title', 'presave_link', 'links']);
 
     return Inertia::render('welcome', [
         'featuredSong'  => $featuredSong,
@@ -46,6 +46,19 @@ Route::post('/theme', function (Request $request) {
     }
     return back();
 })->name('theme.update');
+
+Route::get('/gallery/{folder}', function (string $folder) {
+    $path = storage_path("app/public/gallery/{$folder}");
+    if (!File::isDirectory($path)) abort(404);
+    
+    $files = File::files($path);
+    $urls = collect($files)
+        ->filter(fn($f) => in_array(strtolower($f->getExtension()), ['jpg', 'jpeg', 'png', 'webp']))
+        ->map(fn($f) => asset("storage/gallery/{$folder}/" . $f->getFilename()))
+        ->values();
+    
+    return response()->json($urls);
+})->name('gallery.folder');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

@@ -73,6 +73,9 @@ export default function ThemeToggle() {
         setDark(newDark);
         const newTheme: Theme = newDark ? 'dark' : 'light';
 
+        // Persist to local storage for blocking script access on next load.
+        localStorage.setItem('theme', newTheme);
+
         // Persist to server (authenticated = saved to user, guest = saved to session).
         router.post(route('theme.update'), { theme: newTheme }, { preserveScroll: true, preserveState: true });
     };

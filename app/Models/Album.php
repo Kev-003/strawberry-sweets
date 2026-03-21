@@ -16,11 +16,14 @@ class Album extends Model
         'title_effect_svg',
         'is_featured',
         'spotify_id',
+        'presave_link',
+        'links',
     ];
 
     protected $casts = [
         'is_featured' => 'boolean',
         'release_date' => 'date',
+        'links' => 'array',
     ];
 
     public function songs()

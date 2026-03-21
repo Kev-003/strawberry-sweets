@@ -14,18 +14,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $bandMembers = [
-            ['name' => 'Kevern', 'email' => 'kevern920@gmail.com'],
-            ['name' => 'Myles', 'email' => 'mylsamr@gmail.com'],
-            ['name' => 'Rod', 'email' => 'christianrod099@gmail.com'],
-            ['name' => 'Strawberry Sweets', 'email' => 'strwbrryswtsmusic@gmail.com'],
-        ];
-        foreach ($bandMembers as $member) {
+        $adminEmails = explode(',', env('ADMIN_EMAILS', ''));
+        $password = env('INITIAL_ADMIN_PASSWORD', 'password');
+
+        foreach ($adminEmails as $email) {
+            if (empty($email)) continue;
+
+            // Simple mapping for names based on known emails
+            $name = match (trim($email)) {
+                'kevern920@gmail.com' => 'Kevern',
+                'mylsamr@gmail.com' => 'Myles',
+                'christianrod099@gmail.com' => 'Rod',
+                'strwbrryswtsmusic@gmail.com' => 'Strawberry Sweets',
+                default => 'Band Member',
+            };
+
             User::firstOrCreate(
-                ['email' => $member['email']],
+                ['email' => trim($email)],
                 [
-                    'name' => $member['name'],
-                    'password' => Hash::make('sTr@wb3r1_435465g#FNA*%sdg#@!'), 
+                    'name' => $name,
+                    'password' => Hash::make($password),
                 ]
             );
         }
