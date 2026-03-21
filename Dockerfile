@@ -42,11 +42,9 @@ RUN npm ci && npm run build
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Copy Nginx config
-COPY docker/nginx.conf /etc/nginx/nginx.conf
-
-# Copy startup script
-COPY docker/start.sh /start.sh
+# Move config files into place (already copied via COPY . .)
+RUN cp /var/www/docker/nginx.conf /etc/nginx/nginx.conf
+RUN cp /var/www/docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
 EXPOSE 80
