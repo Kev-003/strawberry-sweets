@@ -1,13 +1,13 @@
 #!/bin/sh
 
-# Ensure SQLite database exists and is writable
+# Fix permissions first — before anything else
 touch /var/www/database/database.sqlite
-chown www-data:www-data /var/www/database/database.sqlite
+chown -R www-data:www-data /var/www/database
 chmod 664 /var/www/database/database.sqlite
-
-# Ensure storage and cache are writable
-chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+chown -R www-data:www-data /var/www/storage
+chmod -R 775 /var/www/storage
+chown -R www-data:www-data /var/www/bootstrap/cache
+chmod -R 775 /var/www/bootstrap/cache
 
 
 # Cache config for production
