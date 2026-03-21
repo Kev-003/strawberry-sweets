@@ -5,6 +5,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+# Ensure SQLite database exists
+touch /var/www/database/database.sqlite
+
 # Run migrations
 php artisan migrate --force
 
