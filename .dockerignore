@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+vendor
+
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.*
+
+# Storage (uploaded files — these live on the server, not in the image)
+storage/app/public/*
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Test files
+tests
+
+# Docker files themselves
+Dockerfile
+docker/
+
+# Misc
+.DS_Store
+README.md
+phpunit.xml
