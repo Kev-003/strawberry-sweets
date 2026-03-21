@@ -20,9 +20,6 @@ storage/framework/views/*
 # Test files
 tests
 
-# Docker files themselves
-Dockerfile
-docker/
 
 # Misc
 .DS_Store
