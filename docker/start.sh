@@ -16,16 +16,18 @@ php artisan route:cache
 php artisan view:cache
 
 # Run migrations
-php artisan migrate --force
+#php artisan migrate --force
 
 # Seed admin users
-php artisan db:seed --force
+#php artisan db:seed --force
 
 # Generate sitemap
 php artisan sitemap:generate
 
-# Create storage symlink
-php artisan storage:link
+# Only create symlink if it doesn't exist
+if [ ! -L /var/www/public/storage ]; then
+    php artisan storage:link
+fi
 
 # Publish Livewire and Filament assets
 php artisan livewire:publish --assets

@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    volumes:
+      - sqlite_data:/var/www/database
+      - storage_data:/var/www/storage/app/public
+
+volumes:
+  sqlite_data:
+  storage_data:
