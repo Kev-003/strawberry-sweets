@@ -52,6 +52,12 @@ RUN cp /var/www/docker/nginx.conf /etc/nginx/nginx.conf
 RUN cp /var/www/docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
-EXPOSE 80
+# Copy SSL certificates
+RUN mkdir -p /etc/nginx/certs
+RUN cp /var/www/docker/certs/origin.crt /etc/nginx/certs/origin.crt
+RUN cp /var/www/docker/certs/origin.key /etc/nginx/certs/origin.key
+RUN chmod 600 /etc/nginx/certs/origin.key
+
+EXPOSE 80 443
 
 CMD ["/start.sh"]

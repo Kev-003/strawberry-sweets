@@ -16,7 +16,7 @@ php artisan route:cache
 php artisan view:cache
 
 # Run migrations
-#php artisan migrate --force
+php artisan migrate --force
 
 # Seed admin users
 #php artisan db:seed --force
