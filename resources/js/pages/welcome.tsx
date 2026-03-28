@@ -101,15 +101,15 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                 {/* Open Graph — for link previews on Facebook, Discord, etc. */}
                 <meta property="og:title" content="Strawberry Sweets" />
                 <meta property="og:description" content="Making songs that capture fleeting feelings and dreamlike moments." />
-                <meta property="og:image" content={`${storageUrl}/gallery/band.jpg`} />
+                <meta property="og:image" content={`${storageUrl}/band.jpg`} />
                 <meta property="og:type" content="music.band" />
-                <meta property="og:url" content="https://yoursite.com" />
+                <meta property="og:url" content="https://strawberry-sweets-music.cc" />
 
                 {/* Twitter/X card */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="Strawberry Sweets" />
                 <meta name="twitter:description" content="Making songs that capture fleeting feelings and dreamlike moments." />
-                <meta name="twitter:image" content={`${storageUrl}/gallery/band.jpg`} />
+                <meta name="twitter:image" content={`${storageUrl}/band.jpg`} />
             </Head>
             <div className="bg-background text-foreground dark:bg-background flex min-h-screen flex-col items-center">
                 {/* ── Header ── */}
