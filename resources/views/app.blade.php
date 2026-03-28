@@ -36,8 +36,8 @@
                 "@@type": "Place",
                 "name": "Balanga, Bataan, Philippines"
             },
-            "url": "https://strawberry-sweets.onrender.com",
-            "image": "https://strawberry-sweets.onrender.com/storage/gallery/band.jpg",
+            "url": "https://strawberry-sweets-music.cc",
+            "image": "https://strawberry-sweets-music.cc/storage/gallery/band.jpg",
             "sameAs": [
                 "https://open.spotify.com/artist/7Mo22u97DuWuFpKEnD0o4Y?si=iRL9e663TR6-YroI0IeSbQ",
                 "https://www.youtube.com/channel/UCxi5A41TEGDnj2kmZQt8efQ",
