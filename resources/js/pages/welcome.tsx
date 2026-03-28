@@ -205,6 +205,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                                     albums={albums}
                                     selectedId={selectedSong?.id ?? null}
                                     onSelect={(song) => setSelectedSong((prev) => (prev?.id === song.id ? null : song))}
+                                    storageUrl={storageUrl}
                                 />
                             </section>
 
