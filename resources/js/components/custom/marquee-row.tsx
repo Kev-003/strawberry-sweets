@@ -40,7 +40,7 @@ function MarqueeRow({ photos, direction, speed = 40 }: MarqueeRowProps) {
         <div className="w-full overflow-hidden">
             <div ref={trackRef} className="flex w-max gap-2" style={{ willChange: 'transform' }}>
                 {doubled.map((src, i) => (
-                    <img key={i} src={src} alt="" className="h-48 w-auto flex-shrink-0 rounded-sm object-cover grayscale-[30%]" draggable={false} />
+                    <img key={i} src={src} alt="" loading="lazy" className="h-48 w-auto flex-shrink-0 rounded-sm object-cover grayscale-[30%]" draggable={false} />
                 ))}
             </div>
         </div>
@@ -54,6 +54,8 @@ interface GalleryStripProps {
 export default function GalleryStrip({ folders }: GalleryStripProps) {
     const [rows, setRows] = useState<string[][]>([[], [], []]);
 
+    const foldersString = JSON.stringify(folders);
+
     useEffect(() => {
         Promise.all(
             folders.map((folder) =>
@@ -62,7 +64,7 @@ export default function GalleryStrip({ folders }: GalleryStripProps) {
                     .catch(() => [] as string[]),
             ),
         ).then((results) => setRows(results));
-    }, [folders]);
+    }, [foldersString, folders]);
 
     const directions: Array<'left' | 'right'> = ['left', 'right', 'left'];
 

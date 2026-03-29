@@ -49,22 +49,20 @@ Route::post('/theme', function (Request $request) {
 })->name('theme.update');
 
 Route::get('/gallery/{folder}', function (string $folder) {
-    $disk = Storage::disk('r2');
-    $prefix = "gallery/{$folder}";
+    return Illuminate\Support\Facades\Cache::remember("gallery_files_{$folder}", now()->addHours(12), function() use ($folder) {
+        $disk = Storage::disk('r2');
+        $prefix = "gallery/{$folder}";
 
-    if (!$disk->exists($prefix)) abort(404);
+        $files = $disk->files($prefix);
 
-    $files = $disk->files($prefix);
-
-    $urls = collect($files)
-        ->filter(fn($f) => in_array(
-            strtolower(pathinfo($f, PATHINFO_EXTENSION)),
-            ['jpg', 'jpeg', 'png', 'webp']
-        ))
-        ->map(fn($f) => $disk->url($f))
-        ->values();
-
-    return response()->json($urls);
+        return collect($files)
+            ->filter(fn($f) => in_array(
+                strtolower(pathinfo($f, PATHINFO_EXTENSION)),
+                ['jpg', 'jpeg', 'png', 'webp']
+            ))
+            ->map(fn($f) => $disk->url($f))
+            ->values();
+    });
 })->middleware('throttle:60,1')->name('gallery.folder');
 
 require __DIR__.'/settings.php';
