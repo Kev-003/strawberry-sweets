@@ -10,12 +10,12 @@ interface Member {
 }
 
 const MEMBERS: Member[] = [
-    { name: 'Renz', role: 'vocals', x: 51, y: 50, darkPhoto: 'renz-sleeping.jpg' },
-    { name: 'Myles', role: 'guitar', x: 65, y: 53, darkPhoto: 'myles-sleeping.jpg' },
-    { name: 'Joemarie', role: 'guitar', x: 92, y: 56, darkPhoto: 'joemarie-sleeping.jpg' },
-    { name: 'Rod', role: 'bass', x: 40, y: 53, darkPhoto: 'rod-sleeping.jpg' },
-    { name: 'Ian', role: 'keys', x: 27, y: 50, darkPhoto: 'ian-sleeping.jpg' },
-    { name: 'Kevs', role: 'drums', x: 10, y: 54, darkPhoto: 'kev-sleeping.jpg' },
+    { name: 'Renz', role: 'vocals', x: 51, y: 50, darkPhoto: 'renz-sleeping.webp' },
+    { name: 'Myles', role: 'guitar', x: 65, y: 53, darkPhoto: 'myles-sleeping.webp' },
+    { name: 'Joemarie', role: 'guitar', x: 92, y: 56, darkPhoto: 'joemarie-sleeping.webp' },
+    { name: 'Rod', role: 'bass', x: 40, y: 53, darkPhoto: 'rod-sleeping.webp' },
+    { name: 'Ian', role: 'keys', x: 27, y: 50, darkPhoto: 'ian-sleeping.webp' },
+    { name: 'Kevs', role: 'drums', x: 10, y: 54, darkPhoto: 'kev-sleeping.webp' },
 ];
 
 function useDarkMode() {

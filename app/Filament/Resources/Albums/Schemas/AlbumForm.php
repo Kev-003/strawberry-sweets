@@ -29,6 +29,7 @@ class AlbumForm
                     ->disk('r2')
                     ->directory(fn ($get) => 'assets/' . str($get('title'))->slug())
                     ->image()
+                    ->acceptedFileTypes(['image/webp'])
                     ->imageEditor(),
 
                 \Filament\Forms\Components\FileUpload::make('banner_webp')

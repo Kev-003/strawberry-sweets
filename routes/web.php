@@ -58,7 +58,7 @@ Route::get('/gallery/{folder}', function (string $folder) {
         return collect($files)
             ->filter(fn($f) => in_array(
                 strtolower(pathinfo($f, PATHINFO_EXTENSION)),
-                ['jpg', 'jpeg', 'png', 'webp']
+                ['webp']
             ))
             ->map(fn($f) => $disk->url($f))
             ->values();
