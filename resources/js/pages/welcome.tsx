@@ -35,7 +35,7 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: WelcomeProps) {
-    const { auth } = usePage<SharedData>().props;
+    const { auth, storageUrl } = usePage<SharedData>().props;
 
     // Selected song from the list (null = show featured)
     const [selectedSong, setSelectedSong] = useState<SongItem | null>(null);
@@ -51,8 +51,6 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
             bannerImage ? `${storageUrl}/${bannerImage}` : null,
             titleSvg ? `${storageUrl}/${titleSvg}` : null,
             titleEffectSvg ? `${storageUrl}/${titleEffectSvg}` : null,
-            ...songs.map((s) => (s.cover_art ? `${storageUrl}/${s.cover_art}` : null)),
-            `${storageUrl}/band.jpg`, // Main band photo
         ].filter(Boolean) as string[];
 
         const preloadImage = (src: string) =>
@@ -68,7 +66,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
         Promise.all([...mediaToPreload.map(preloadImage), minimumDelay]).then(() => {
             document.getElementById('loading-screen')?.classList.add('hidden');
         });
-    }, [featuredSong, featuredAlbum, songs]);
+    }, [featuredSong, featuredAlbum, songs, storageUrl]);
 
     const featured = featuredSong || featuredAlbum;
     const bannerImage = featured?.banner_webp || featured?.cover_art;
@@ -86,7 +84,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
     const infoAlbum = selectedSong?.album?.title ?? null;
     const infoIsComingSoon = infoReleaseDate ? new Date(infoReleaseDate) > new Date() : false;
 
-    const { storageUrl } = usePage<SharedData>().props;
+
 
     return (
         <>

@@ -51,6 +51,7 @@ export default function BandIntro({ photo, storageUrl }: { photo: string; storag
                 <img
                     src={`${storageUrl}/${photo}`}
                     alt="The band"
+                    loading="lazy"
                     className="h-auto w-full object-cover"
                     style={isMobile ? undefined : { filter: 'grayscale(80%) blur(2px)', willChange: 'filter' }}
                 />
@@ -105,6 +106,7 @@ export default function BandIntro({ photo, storageUrl }: { photo: string; storag
                                     <img
                                         src={swapPhoto ? `${storageUrl}/${member.darkPhoto}` : `${storageUrl}/${photo}`}
                                         alt=""
+                                        loading="lazy"
                                         className="h-full w-full object-cover transition-all duration-500"
                                         style={{
                                             objectPosition: `${member.x}% ${member.y}%`,
@@ -129,6 +131,7 @@ export default function BandIntro({ photo, storageUrl }: { photo: string; storag
                                             src={`${storageUrl}/${photo}`}
                                             alt=""
                                             aria-hidden
+                                            loading="lazy"
                                             className="absolute h-auto object-cover"
                                             style={{
                                                 filter: 'grayscale(0%) blur(0px)',
@@ -153,6 +156,7 @@ export default function BandIntro({ photo, storageUrl }: { photo: string; storag
                                         <img
                                             src={`${storageUrl}/${member.darkPhoto}`}
                                             alt={member.name}
+                                            loading="lazy"
                                             className="h-full w-full object-cover"
                                             style={{
                                                 objectPosition: 'center top',

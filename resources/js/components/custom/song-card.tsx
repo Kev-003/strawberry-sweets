@@ -22,6 +22,7 @@ export default function SongCard({ title, coverArt, albumTitle, releaseDate, tra
                         <img
                             src={`${storageUrl}/${coverArt}`}
                             alt={title}
+                            loading="lazy"
                             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                     ) : (
