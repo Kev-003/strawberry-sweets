@@ -28,10 +28,10 @@ class SongsTable
                     ->square(),
                 \Filament\Tables\Columns\ImageColumn::make('banner_webp')
                     ->label('Banner'),
-                \Filament\Tables\Columns\ImageColumn::make('title_svg')
-                    ->label('Title SVG'),
-                \Filament\Tables\Columns\ImageColumn::make('title_effect_svg')
-                    ->label('Title Effect SVG'),
+                \Filament\Tables\Columns\ImageColumn::make('title_webp')
+                    ->label('Title WebP'),
+                \Filament\Tables\Columns\ImageColumn::make('title_effect_webp')
+                    ->label('Title Effect WebP'),
                 IconColumn::make('is_featured')
                     ->boolean(),
                 TextColumn::make('track_number')

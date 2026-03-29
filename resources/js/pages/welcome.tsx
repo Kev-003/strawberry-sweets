@@ -15,8 +15,8 @@ interface FeaturedItem {
     description: string | null;
     cover_art: string | null;
     banner_webp: string | null;
-    title_svg: string | null;
-    title_effect_svg: string | null;
+    title_webp: string | null;
+    title_effect_webp: string | null;
     release_date: string | null;
     presave_link: string | null;
     links: {
@@ -44,8 +44,8 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
     useEffect(() => {
         const featured = featuredSong || featuredAlbum;
         const bannerImage = featured?.banner_webp || featured?.cover_art;
-        const titleSvg = featured?.title_svg;
-        const titleEffectSvg = featured?.title_effect_svg;
+        const titleSvg = featured?.title_webp;
+        const titleEffectSvg = featured?.title_effect_webp;
 
         const mediaToPreload = [
             bannerImage ? `${storageUrl}/${bannerImage}` : null,
@@ -70,8 +70,8 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
 
     const featured = featuredSong || featuredAlbum;
     const bannerImage = featured?.banner_webp || featured?.cover_art;
-    const titleSvg = featured?.title_svg;
-    const titleEffectSvg = featured?.title_effect_svg;
+    const titleSvg = featured?.title_webp;
+    const titleEffectSvg = featured?.title_effect_webp;
     const releaseDate = featured?.release_date;
     const isComingSoon = releaseDate ? new Date(releaseDate) > new Date() : false;
     const hasReleaseDate = !!releaseDate;

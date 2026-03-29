@@ -50,15 +50,19 @@ class SongForm
                     ->image()
                     ->acceptedFileTypes(['image/webp']),
 
-                \Filament\Forms\Components\FileUpload::make('title_svg')
-                    ->label('Title (SVG)')
+                \Filament\Forms\Components\FileUpload::make('title_webp')
+                    ->label('Title (WebP)')
                     ->disk('r2')
-                    ->directory(fn ($get) => 'assets/' . str($get('title'))->slug()),
+                    ->directory(fn ($get) => 'assets/' . str($get('title'))->slug())
+                    ->image()
+                    ->acceptedFileTypes(['image/webp']),
 
-                \Filament\Forms\Components\FileUpload::make('title_effect_svg')
-                    ->label('Title Effect (SVG)')
+                \Filament\Forms\Components\FileUpload::make('title_effect_webp')
+                    ->label('Title Effect (WebP)')
                     ->disk('r2')
-                    ->directory(fn ($get) => 'assets/' . str($get('title'))->slug()),
+                    ->directory(fn ($get) => 'assets/' . str($get('title'))->slug())
+                    ->image()
+                    ->acceptedFileTypes(['image/webp']),
 
                 Toggle::make('is_featured')
                     ->required(),
