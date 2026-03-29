@@ -23,7 +23,12 @@ export function initializeTheme() {
     applyTheme(savedAppearance);
 
     // Add the event listener for system theme changes...
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
+    // Compatibility: Safaris < 14 use addListener, newer use addEventListener
+    if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', handleSystemThemeChange);
+    } else {
+        (mediaQuery as any).addListener(handleSystemThemeChange);
+    }
 }
 
 export function useAppearance() {
@@ -39,7 +44,13 @@ export function useAppearance() {
         const savedAppearance = localStorage.getItem('appearance') as Appearance | null;
         updateAppearance(savedAppearance || 'light');
 
-        return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
+        return () => {
+            if (mediaQuery.removeEventListener) {
+                mediaQuery.removeEventListener('change', handleSystemThemeChange);
+            } else {
+                (mediaQuery as any).removeListener(handleSystemThemeChange);
+            }
+        };
     }, []);
 
     return { appearance, updateAppearance };

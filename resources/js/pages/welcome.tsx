@@ -48,7 +48,7 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
         const titleEffectSvg = featured?.title_effect_webp;
 
         const mediaToPreload = [
-            bannerImage ? `${storageUrl}/${bannerImage}` : null,
+            // Removed bannerImage from preloading as it's too large and blocks initial render
             titleSvg ? `${storageUrl}/${titleSvg}` : null,
             titleEffectSvg ? `${storageUrl}/${titleEffectSvg}` : null,
         ].filter(Boolean) as string[];
@@ -61,9 +61,14 @@ export default function Welcome({ featuredSong, featuredAlbum, songs, albums }: 
                 img.src = src;
             });
 
-        const minimumDelay = new Promise((resolve) => setTimeout(resolve, 500));
+        const minimumDelay = new Promise((resolve) => setTimeout(resolve, 300));
+        // Safety timeout to ensure loading screen is hidden even if preloading stalls (e.g. on problematic networks/Safari)
+        const safetyTimeout = new Promise((resolve) => setTimeout(resolve, 3000));
 
-        Promise.all([...mediaToPreload.map(preloadImage), minimumDelay]).then(() => {
+        Promise.race([
+            Promise.all([...mediaToPreload.map(preloadImage), minimumDelay]),
+            safetyTimeout,
+        ]).then(() => {
             document.getElementById('loading-screen')?.classList.add('hidden');
         });
     }, [featuredSong, featuredAlbum, songs, storageUrl]);
