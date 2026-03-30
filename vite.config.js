@@ -5,16 +5,14 @@ import {
 } from 'vite';
 import tailwindcss from "@tailwindcss/vite";
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 export default defineConfig({
-    plugins: [
-        laravel({
-            input: ['resources/css/app.css', 'resources/js/app.tsx'],
-            ssr: 'resources/js/ssr.jsx',
-            refresh: true,
-        }),
-        react(),
-        tailwindcss(),
-    ],
+    plugins: [laravel({
+        input: ['resources/css/app.css', 'resources/js/app.tsx'],
+        ssr: 'resources/js/ssr.jsx',
+        refresh: true,
+    }), react(), tailwindcss(), cloudflare()],
     esbuild: {
         jsx: 'automatic',
     },
